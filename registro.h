@@ -1,0 +1,1 @@
+void registro(FILE *usuarios);
