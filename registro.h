@@ -1,1 +1,1 @@
-void registro(FILE *usuarios);
+void registro();
