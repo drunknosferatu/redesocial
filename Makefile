@@ -7,7 +7,10 @@ registro.o : registro.c
 main.o : main.c
 	gcc -o main.o -c main.c
 
-main : main.o registro.o chec.o
+ux.o : ux.c
+	gcc -o ux.o -c ux.c
+
+main : main.o registro.o chec.o ux.o
 	gcc -o main *.o
 
 all : main

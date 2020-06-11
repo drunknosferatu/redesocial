@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<string.h>
 #include<stdlib.h>
 #include "chec.h"
 void registro(){
@@ -16,11 +17,8 @@ void registro(){
 		compar=chec(novachave);
 	}
 	fprintf(usuarios,"%s",novachave);//ao chegar aqui a chave inserida é valida
-	int i=0;
-	while(novachave[i+1]){
-		i++;
-	}
-	novachave[i]='\0';//tira o \n da string pra facilitar a manipulação do arquivo por nome
+	int i=strlen(novachave);
+	novachave[--i]='\0';//tira o \n da string pra facilitar a manipulação do arquivo por nome
 	FILE *novousuario4;//para abrir o arq. dos seus posts
 	FILE *novousuario2;//para abrir o arq. de seguidores
 	FILE *novousuario3;// para abrir o arq. de seguidos
@@ -32,11 +30,11 @@ void registro(){
 	fgets(nome,100,stdin);
 	fprintf(novousuario, "%s",nome);
 	printf("Data de nascimento, separada por barras(EX:03/08/2002):\n");
-	char nasc[14];
+	char nasc[100];
 	fgets(nasc,100,stdin);
 	fprintf(novousuario, "%s", nasc);
 	printf("Número de telefone(sem traços e pontos):\n");
-	char telefone[15];
+	char telefone[100];
 	fgets(telefone,100,stdin);
 	fprintf(novousuario, "%s", telefone);
 	fclose(usuarios);
