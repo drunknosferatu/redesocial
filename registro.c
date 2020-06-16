@@ -4,17 +4,17 @@
 #include "chec.h"
 void registro(){
 	FILE *usuarios;
-	usuarios=fopen("usuarios.txt","a");
+	usuarios=fopen("usuarios.txt","a+");
 	setbuf(stdin,NULL);
 	printf("Insira sua nova chave de acesso (as chaves podem ter até 50 caracteres):\n");
 	char novachave[50];
 	fgets(novachave,50,stdin);
-	int compar=chec(novachave);//checa se ja existe uma chave com esse nome
+	int compar=chec(novachave,usuarios);//checa se ja existe uma chave com esse nome
 	while(!compar){
 		printf("Chave indisponivel, tente novamente\n");
 		fgets(novachave,50,stdin);
 		compar=1;
-		compar=chec(novachave);
+		compar=chec(novachave,usuarios);
 	}
 	fprintf(usuarios,"%s",novachave);//ao chegar aqui a chave inserida é valida
 	int i=strlen(novachave);
