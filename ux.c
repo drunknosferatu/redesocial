@@ -68,11 +68,13 @@ void ux(char *chave){
 			case 3 :
 				printf("Digite o nome da pessoa que gostaria de seguir:\n");
 				fgets(aux,50,stdin);
-				int checa=chec(aux);
+				FILE *usuarios;
+				usuarios=fopen("usuarios.txt","r");
+				int checa=chec(aux,usuarios);
 				while(checa){
 					printf("Este usuario não existe,tente novamente\n");
 					fgets(aux,50,stdin);
-					checa=chec(aux);
+					checa=chec(aux,usuarios);
 				}
 				int manip=strlen(aux)-1;
 				aux[manip++]='3';
@@ -82,6 +84,7 @@ void ux(char *chave){
 				fclose(seguir);
 				aux[manip]='\0';
 				fprintf(seguidos,"%s",aux);
+				fclose(usuarios);
 				break;
 			case 4 :
 				fseek(seguidores,0,SEEK_SET);
@@ -96,13 +99,13 @@ void ux(char *chave){
 				}
 				break;
 			case 6:
-				fseek(postsr,0,SEEK_SET);
+				fseek(posts,0,SEEK_SET);
 				while(fgets(aux,128,posts)!=NULL){
 					printf("%s\n", aux);
 				}
 				break;
 			case 7:
-				fseek(tlinfor,0,SEEK_SET);
+				fseek(tlinfo,0,SEEK_SET);
 				while(fgets(aux,128,tlinfo)){
 					printf("%s\n", aux);
 				}

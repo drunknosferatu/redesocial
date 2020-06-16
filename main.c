@@ -6,6 +6,7 @@
 #include "ux.h"
 int main(int argc, char *argv[]){
 	int compar;
+
 	while(1){//loop de funcionamento do programa
 		printf("Gostaria de iniciar uma sessão[s/n]?\n");
 		char verif=getc(stdin);
@@ -30,7 +31,10 @@ int main(int argc, char *argv[]){
 			printf("Insira sua chave de acesso:\n");
 			char *chave=malloc(50*sizeof(char));
 			fgets(chave,50, stdin);//pega a chave de acesso
-			compar=chec(chave);//checa se a chave é valida ou não
+			FILE *usuarios;
+			usuarios=fopen("usuarios.txt","r");
+			compar=chec(chave,usuarios);//checa se a chave é valida ou não
+			fclose(usuarios);
 			if (compar){
 				printf("Chave inválida\n");
 			}
