@@ -38,10 +38,11 @@ void ux(char *chave){
 		printf("6.Ver meus posts\n");
 		printf("7.Ver minha timeline\n");
 		printf("8.Logout\n");
-		scanf("%d",&verif);
-		getchar();
+		get_int(&verif);//nova função de pegar novo digito
+		//getchar() removido
 		while(verif<1||verif>8){
-			printf("Entrada inválida selecione novamente");
+			printf("Entrada inválida selecione novamente\n");
+            get_int(&verif);
 		}
 		switch(verif){
 			case 1 :
