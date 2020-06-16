@@ -1,1 +1,1 @@
-int chec(char *chave);
+int chec(char *chave, FILE *arq);

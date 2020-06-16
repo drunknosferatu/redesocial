@@ -4,26 +4,28 @@
 #include<stdlib.h>
 void ux(char *chave){
 	int flag=1;
-	char *info,*post,*aux;
+	char *info;
+	char *post;
+	char *aux;
 	info=(char*)malloc(sizeof(char)*100);
 	post=(char*)malloc(sizeof(char)*128);
 	aux=(char*)malloc(sizeof(char)*50);
 	int i=strlen(chave);
 	chave[--i]='\0';
-	FILE *tlinfor=fopen(chave,"r");
-	FILE *tlinfoa=fopen(chave,"a");
+	FILE *tlinfo;
+	tlinfo=fopen(chave,"a+");
 	chave[i++]='4';
 	chave[i--]='\0';
-	FILE *postsr=fopen(chave,"r");
-	FILE *postsa=fopen(chave,"a");
+	FILE *posts;
+	posts=fopen(chave,"a+");
 	chave[i++]='3';
 	chave[i--]='\0';
-	FILE *seguidoresr=fopen(chave,"r");
-	FILE *seguidoresa=fopen(chave,"a");
+	FILE *seguidores;
+	seguidores=fopen(chave,"a+");
 	chave[i++]='2';
 	chave[i--]='\0';
-	FILE *seguidosr=fopen(chave,"r");
-	FILE *seguidosa=fopen(chave,"a");
+	FILE *seguidos;
+	seguidos=fopen(chave,"a+");
 	chave[i]='\0';
 	while(flag){
 		int verif;
@@ -46,16 +48,16 @@ void ux(char *chave){
 		switch(verif){
 			case 1 :
 				for(i=0;i<3;i++){
-					fgets(info,100,tlinfor);
+					fgets(info,100,tlinfo);
 					printf("%s",info);
 				}
 				break;
 			case 2 :
 				printf("Escreva seu post abaixo\n");
 				fgets(post,128,stdin);
-				fprintf(postsa,"%s",post);
-				fprintf(tlinfoa,"%s",post);
-				while(fgets(aux,50,seguidoresr)!=NULL){
+				fprintf(posts,"%s",post);
+				fprintf(tlinfo,"%s",post);
+				while(fgets(aux,50,seguidores)!=NULL){
 					int j=strlen(aux);
 					aux[--j]='\0';
 					FILE *tlseg=fopen(aux,"a");
@@ -79,29 +81,29 @@ void ux(char *chave){
 				fprintf(seguir,"%s",chave);
 				fclose(seguir);
 				aux[manip]='\0';
-				fprintf(seguidosa,"%s",aux);
+				fprintf(seguidos,"%s",aux);
 				break;
 			case 4 :
-				fseek(seguidoresr,0,SEEK_SET);
-				while(fgets(aux,50,seguidoresr)!=NULL){
+				fseek(seguidores,0,SEEK_SET);
+				while(fgets(aux,50,seguidores)!=NULL){
 					printf("%s\n",aux);
 				}
 				break;
 			case 5 :
-				fseek(seguidosr,0,SEEK_SET);
-				while(fgets(aux,50,seguidosr)!=NULL){
+				fseek(seguidos,0,SEEK_SET);
+				while(fgets(aux,50,seguidos)!=NULL){
 					printf("%s\n", aux);
 				}
 				break;
 			case 6:
 				fseek(postsr,0,SEEK_SET);
-				while(fgets(aux,128,postsr)!=NULL){
+				while(fgets(aux,128,posts)!=NULL){
 					printf("%s\n", aux);
 				}
 				break;
 			case 7:
 				fseek(tlinfor,0,SEEK_SET);
-				while(fgets(aux,128,tlinfor)){
+				while(fgets(aux,128,tlinfo)){
 					printf("%s\n", aux);
 				}
 				break;
@@ -110,14 +112,10 @@ void ux(char *chave){
 				free(aux);
 				free(info);
 				free(post);
-				fclose(postsr);
-				fclose(tlinfoa);
-				fclose(tlinfor);
-				fclose(seguidoresa);
-				fclose(seguidoresr);
-				fclose(seguidosa);
-				fclose(seguidosr);
-				fclose(postsa);
+				fclose(posts);
+				fclose(tlinfo);
+				fclose(seguidores);
+				fclose(seguidos);
 				flag=0;
 		}
 	}
