@@ -6,7 +6,6 @@
 #include "ux.h"
 int main(int argc, char *argv[]){
 	int compar;
-
 	while(1){//loop de funcionamento do programa
 		printf("Gostaria de iniciar uma sessão[s/n]?\n");
 		char verif;
@@ -30,7 +29,13 @@ int main(int argc, char *argv[]){
 		}
 		if (verif1=='s'){
 			printf("Insira sua chave de acesso:\n");
-			char *chave=malloc(50*sizeof(char));
+			char *chave;
+			chave=malloc(50*sizeof(char));
+			if(chave==NULL){
+				printf("Falha interna. Fechando o programa");
+				exit(0);
+			}
+			setbuf(stdin,NULL);
 			fgets(chave,50, stdin);//pega a chave de acesso
 			FILE *usuarios;
 			usuarios=fopen("usuarios.txt","r");
@@ -38,6 +43,7 @@ int main(int argc, char *argv[]){
 			fclose(usuarios);
 			if (compar){
 				printf("Chave inválida\n");
+				free(chave);
 			}
 			if (!compar){//inicio da parte de usuario
 				ux(chave);

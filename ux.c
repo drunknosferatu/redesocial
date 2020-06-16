@@ -8,24 +8,52 @@ void ux(char *chave){
 	char *post;
 	char *aux;
 	info=(char*)malloc(sizeof(char)*100);
-	post=(char*)malloc(sizeof(char)*128);
+	if(info==NULL){
+		printf("Falha interna. Fechando o programa");
+		exit(0);
+	}
+	post=(char*)malloc(sizeof(char)*128);	
+	if(post==NULL){
+		printf("Falha interna. Fechando o programa");
+		exit(0);
+	}
 	aux=(char*)malloc(sizeof(char)*50);
+	if(aux==NULL){
+		printf("Falha interna. Fechando o programa");
+		exit(0);
+	}
 	int i=strlen(chave);
 	chave[--i]='\0';
 	FILE *tlinfo;
-	tlinfo=fopen(chave,"a+");
+	tlinfo=fopen(chave,"a+");	
+	if(tlinfo==NULL){
+		printf("Falha interna. Fechando o programa");
+		exit(0);
+	}
 	chave[i++]='4';
 	chave[i--]='\0';
 	FILE *posts;
-	posts=fopen(chave,"a+");
+	posts=fopen(chave,"a+");	
+	if(posts==NULL){
+		printf("Falha interna. Fechando o programa");
+		exit(0);
+	}
 	chave[i++]='3';
 	chave[i--]='\0';
 	FILE *seguidores;
-	seguidores=fopen(chave,"a+");
+	seguidores=fopen(chave,"a+");	
+	if(seguidores==NULL){
+		printf("Falha interna. Fechando o programa");
+		exit(0);
+	}
 	chave[i++]='2';
 	chave[i--]='\0';
 	FILE *seguidos;
 	seguidos=fopen(chave,"a+");
+	if(seguidos==NULL){
+		printf("Falha interna. Fechando o programa");
+		exit(0);
+	}
 	chave[i]='\0';
 	while(flag){
 		int verif;
@@ -62,6 +90,10 @@ void ux(char *chave){
 					int j=strlen(aux);
 					aux[--j]='\0';
 					FILE *tlseg=fopen(aux,"a");
+					if(tlseg==NULL){
+						printf("Falha interna. Fechando o programa");
+						exit(0);
+					}
 					fprintf(tlseg,"%s",post);
 					fclose(tlseg);
 				}
@@ -71,6 +103,10 @@ void ux(char *chave){
 				fgets(aux,50,stdin);
 				FILE *usuarios;
 				usuarios=fopen("usuarios.txt","r");
+				if(usuarios==NULL){
+					printf("Falha interna. Fechando o programa");
+					exit(0);
+				}
 				int checa=chec(aux,usuarios);
 				while(checa){
 					printf("Este usuario não existe,tente novamente\n");
@@ -81,6 +117,10 @@ void ux(char *chave){
 				aux[manip++]='3';
 				aux[manip--]='\0';
 				FILE *seguir=fopen(aux,"a");
+				if(seguir==NULL){
+					printf("Falha interna. Fechando o programa");
+					exit(0);
+				}
 				fprintf(seguir,"%s",chave);
 				fclose(seguir);
 				aux[manip]='\0';
@@ -107,7 +147,7 @@ void ux(char *chave){
 				break;
 			case 7:
 				fseek(tlinfo,0,SEEK_SET);
-				while(fgets(aux,128,tlinfo)){
+				while(fgets(aux,128,tlinfo)!=NULL){
 					printf("%s\n", aux);
 				}
 				break;
