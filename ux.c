@@ -88,7 +88,7 @@ void ux(char *chave){
 				fprintf(tlinfo,"%s",post);
 				while(fgets(aux,50,seguidores)!=NULL){
 					int j=strlen(aux);
-					aux[--j]='\0';
+					aux[j]='\0';
 					FILE *tlseg=fopen(aux,"a");
 					if(tlseg==NULL){
 						printf("Falha interna. Fechando o programa");
