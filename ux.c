@@ -4,6 +4,7 @@
 #include<stdlib.h>
 void ux(char *chave){
 	int flag=1;
+	int k;
 	char *info;
 	char *post;
 	char *aux;
@@ -146,9 +147,33 @@ void ux(char *chave){
 				}
 				break;
 			case 7:
+				k=0;
+				int l=0;
+				int m=1;
+				int o=1;
+				char perg='s';
+				int tamanho=0;
+				int tamultimos=0;
 				fseek(tlinfo,0,SEEK_SET);
 				while(fgets(aux,128,tlinfo)!=NULL){
-					printf("%s\n", aux);
+					k++;
+				}
+				while(perg=='s'&&m<=k){
+					while(m<=5*o&&tlinfo!=NULL&&m<=k){
+						l=0;
+						fseek(tlinfo,0,SEEK_SET);
+						while(fgets(aux,128,tlinfo)!=NULL&&l<=k-m-1){
+							l++;
+						}
+						printf("%s",aux);
+						m++;
+					}
+					o++;
+					printf("Gostaria de atualizar sua timeline?[s/n]\n");
+					get_char(&perg);
+				}
+				if(m>k){
+					printf("Esses é o fim de sua timeline\n");
 				}
 				break;
 			default :
