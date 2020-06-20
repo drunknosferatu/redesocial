@@ -30,12 +30,12 @@ void registro(){
 	fgets(nome,100,stdin);
 	fprintf(novousuario, "%s",nome);
 	printf("Data de nascimento, separada por barras(EX:03/08/2002):\n");
-	char nasc[100];
-	fgets(nasc,100,stdin);
+	char nasc[11];
+	fgets(nasc,11,stdin);
 	fprintf(novousuario, "%s", nasc);
-	printf("Número de telefone(sem traços e pontos):\n");
-	char telefone[100];
-	fgets(telefone,100,stdin);
+	printf("Número de telefone(sem traços e pontos,Ex:19989301761):\n");
+	char telefone[12];
+	fgets(telefone,12,stdin);
 	fprintf(novousuario, "%s", telefone);
 	fclose(usuarios);
 	fclose(novousuario);

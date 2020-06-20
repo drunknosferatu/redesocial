@@ -96,6 +96,7 @@ void ux(char *chave){
 						exit(0);
 					}
 					fprintf(tlseg,"%s",post);
+					fprintf(tlseg,"%s:\n",chave);
 					fclose(tlseg);
 				}
 				break;
