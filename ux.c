@@ -92,7 +92,7 @@ void ux(char *chave){
 				fseek(seguidores,0,SEEK_SET);
 				while(fgets(aux,50,seguidores)!=NULL){
 					int j=strlen(aux);
-					aux[j]='\0';
+					aux[--j]='\0';
 					FILE *tlseg=fopen(aux,"a");
 					if(tlseg==NULL){
 						printf("Falha interna. Fechando o programa");
@@ -119,14 +119,21 @@ void ux(char *chave){
 					checa=chec(aux,usuarios);
 				}
 				k=strlen(chave);
+				fseek(seguidos,0,SEEK_SET);
 				checa=chec(aux,seguidos);
 				if (!checa){
 					printf("Você segue esse usuário, gostaria de deixar de segui-lo?[s/n]\n");
 					char teste;
 					get_char(&teste);
 					if(teste=='s'){
-						char aux2;
+						char *aux2;
+						aux2=(char*) malloc(sizeof(char)*50);
+						if (aux2==NULL){
+							printf("Falha interna. Fechando o programa\n");
+							exit(0);
+						}
 						int z=0;
+						fseek(seguidos,0,SEEK_SET);
 						while(fgets(aux2,50,seguidos)!=NULL){
 							z++;
 						}
@@ -134,6 +141,7 @@ void ux(char *chave){
 						chave[k--]='\0';
 						apagar_usuario(seguidos,aux,z,chave);
 						chave[k]='\0';
+						free(aux2);
 					}
 				}else{
 					int manip=strlen(aux)-1;
@@ -192,7 +200,7 @@ void ux(char *chave){
 						while(fgets(aux,128,tlinfo)!=NULL&&l<=k-m-1){
 							l++;
 						}
-						printf("%s\n",aux);
+						printf("%s",aux);
 						m++;
 					}
 					o++;
