@@ -2,6 +2,7 @@
 #include<string.h>
 #include "chec.h"
 #include<stdlib.h>
+#include "apagar.h"
 void ux(char *chave){
 	int flag=1;
 	int k;
@@ -103,7 +104,7 @@ void ux(char *chave){
 				}
 				break;
 			case 3 :
-				printf("Digite o nome da pessoa que gostaria de seguir:\n");
+				printf("Digite o nome da pessoa que gostaria de seguir ou deixar de seguir:\n");
 				fgets(aux,50,stdin);
 				FILE *usuarios;
 				usuarios=fopen("usuarios.txt","r");
@@ -117,26 +118,42 @@ void ux(char *chave){
 					fgets(aux,50,stdin);
 					checa=chec(aux,usuarios);
 				}
-				int manip=strlen(aux)-1;
-				aux[manip++]='3';
-				aux[manip--]='\0';
-				FILE *seguir=fopen(aux,"a");
-				if(seguir==NULL){
-					printf("Falha interna. Fechando o programa");
-					exit(0);
-				}
 				k=strlen(chave);
-				chave[k++]='\n';
-				chave[k--]='\0';
-				printf("%s",chave);
-				fprintf(seguir,"%s",chave);
-				chave[k]='\0';
-				fclose(seguir);
-				aux[manip++]='\n';
-				aux[manip]='\0';
-				printf("%s", aux);
-				fprintf(seguidos,"%s",aux);
-				fclose(usuarios);
+				checa=chec(aux,seguidos);
+				if (!checa){
+					printf("Você segue esse usuário, gostaria de deixar de segui-lo?[s/n]\n");
+					char teste;
+					get_char(&teste);
+					if(teste=='s'){
+						char aux2;
+						int z=0;
+						while(fgets(aux2,50,seguidos)!=NULL){
+							z++;
+						}
+						chave[k++]='2';
+						chave[k--]='\0';
+						apagar_usuario(seguidos,aux,z,chave);
+						chave[k]='\0';
+					}
+				}else{
+					int manip=strlen(aux)-1;
+					aux[manip++]='3';
+					aux[manip--]='\0';
+					FILE *seguir=fopen(aux,"a");
+					if(seguir==NULL){
+						printf("Falha interna. Fechando o programa");
+						exit(0);
+					}
+					chave[k++]='\n';
+					chave[k--]='\0';
+					fprintf(seguir,"%s",chave);
+					chave[k]='\0';
+					fclose(seguir);
+					aux[manip++]='\n';
+					aux[manip]='\0';
+					fprintf(seguidos,"%s",aux);
+					fclose(usuarios);
+				}
 				break;
 			case 4 :
 				fseek(seguidores,0,SEEK_SET);

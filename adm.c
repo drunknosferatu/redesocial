@@ -33,7 +33,6 @@ switch (verif) {
 		}
 		printf("Existem atualmente %d posts na timeline geral\n", num);
 		fseek(fp, 0, SEEK_SET);
-
 		while(flag) {
 		for(int i=1; i<=5; i++) {
 			if(fgets(teste, 128, fp)==NULL) {//alt
@@ -102,7 +101,7 @@ switch (verif) {
 				fgets(aux, 50, stdin);
                         }
 
-apagar_usuario(fd, aux, num);
+apagar_usuario(fd, aux, num, "usuarios.txt");
                 }
 	    break;
            }
