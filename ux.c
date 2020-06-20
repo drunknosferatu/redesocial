@@ -88,7 +88,6 @@ void ux(char *chave){
 				printf("Escreva seu post abaixo\n");
 				fgets(post,128,stdin);
 				fprintf(posts,"%s",post);
-				fprintf(tlinfo,"%s",post);
 				fseek(seguidores,0,SEEK_SET);
 				while(fgets(aux,50,seguidores)!=NULL){
 					int j=strlen(aux);
