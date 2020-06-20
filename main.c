@@ -4,7 +4,7 @@
 #include "chec.h"
 #include "registro.h"
 #include "ux.h"
-#include "adm.h"
+//#include "adm.h"
 int main(int argc, char *argv[]){
 	int compar;
 	while(1){//loop de funcionamento do programa
@@ -38,9 +38,9 @@ int main(int argc, char *argv[]){
 			}
 			setbuf(stdin,NULL);
 			fgets(chave,50, stdin);//pega a chave de acesso
-			if(strcmp(chave,"adm")==0) {
-				adm();
-			}
+			//if(strcmp(chave,"adm")==0) {
+				//adm();
+			//}
 			FILE *usuarios;
 			usuarios=fopen("usuarios.txt","r");
 			compar=chec(chave,usuarios);//checa se a chave é valida ou não

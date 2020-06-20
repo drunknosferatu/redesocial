@@ -19,7 +19,7 @@ apagar_post.o: apagar_post.c
 apagar_usuario.o : apagar_usuario.c
 	gcc -o apagar_usuario.o -c apagar_usuario.c
 
-main : main.o registro.o chec.o ux.o apagar_usuario.o apagar_post.o adm.o
+main : main.o registro.o chec.o ux.o 
 	gcc -o main *.o
 
 all : main

@@ -5,11 +5,23 @@
 void ux(char *chave){
 	int flag=1;
 	int k;
-	char *info;
+	char *telefone;
+	char *data;
 	char *post;
 	char *aux;
-	info=(char*)malloc(sizeof(char)*100);
-	if(info==NULL){
+	char *nome;
+	nome=(char*)malloc(sizeof(char)*100);
+	if(nome==NULL){
+		printf("Falha interna. Fechando o programa");
+		exit(0);
+	}	
+	telefone=(char*)malloc(sizeof(char)*100);
+	if(telefone==NULL){
+		printf("Falha interna. Fechando o programa");
+		exit(0);
+	}
+	data=(char*)malloc(sizeof(char)*100);
+	if(data==NULL){
 		printf("Falha interna. Fechando o programa");
 		exit(0);
 	}
@@ -77,6 +89,7 @@ void ux(char *chave){
 		}
 		switch(verif){
 			case 1 :
+				fseek(tlinfo,0,SEEK_SET);
 				for(i=0;i<3;i++){
 					fgets(info,100,tlinfo);
 					printf("%s",info);
@@ -87,6 +100,7 @@ void ux(char *chave){
 				fgets(post,128,stdin);
 				fprintf(posts,"%s",post);
 				fprintf(tlinfo,"%s",post);
+				fseek(seguidores,0,SEEK_SET);
 				while(fgets(aux,50,seguidores)!=NULL){
 					int j=strlen(aux);
 					aux[j]='\0';
@@ -123,9 +137,16 @@ void ux(char *chave){
 					printf("Falha interna. Fechando o programa");
 					exit(0);
 				}
+				int k=strlen(chave);
+				chave[k++]='\n';
+				chave[k--]='\0';
+				printf("%s",chave);
 				fprintf(seguir,"%s",chave);
+				chave[k]='\0';
 				fclose(seguir);
+				aux[manip++]='\n';
 				aux[manip]='\0';
+				printf("%s", aux);
 				fprintf(seguidos,"%s",aux);
 				fclose(usuarios);
 				break;
@@ -160,13 +181,13 @@ void ux(char *chave){
 					k++;
 				}
 				while(perg=='s'&&m<=k){
-					while(m<=5*o&&tlinfo!=NULL&&m<=k){
+					while(m<=10*o&&tlinfo!=NULL&&m<=k){
 						l=0;
 						fseek(tlinfo,0,SEEK_SET);
 						while(fgets(aux,128,tlinfo)!=NULL&&l<=k-m-1){
 							l++;
 						}
-						printf("%s",aux);
+						printf("%s\n",aux);
 						m++;
 					}
 					o++;
@@ -180,7 +201,9 @@ void ux(char *chave){
 			default :
 				free(chave);
 				free(aux);
-				free(info);
+				free(nome);
+				free(telefone);
+				free(data);
 				free(post);
 				fclose(posts);
 				fclose(tlinfo);
