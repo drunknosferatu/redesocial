@@ -5,23 +5,11 @@
 void ux(char *chave){
 	int flag=1;
 	int k;
-	char *telefone;
-	char *data;
 	char *post;
 	char *aux;
-	char *nome;
-	nome=(char*)malloc(sizeof(char)*100);
-	if(nome==NULL){
-		printf("Falha interna. Fechando o programa");
-		exit(0);
-	}	
-	telefone=(char*)malloc(sizeof(char)*100);
-	if(telefone==NULL){
-		printf("Falha interna. Fechando o programa");
-		exit(0);
-	}
-	data=(char*)malloc(sizeof(char)*100);
-	if(data==NULL){
+	char *info;
+	info=(char*)malloc(sizeof(char)*100);
+	if(info==NULL){
 		printf("Falha interna. Fechando o programa");
 		exit(0);
 	}
@@ -137,7 +125,7 @@ void ux(char *chave){
 					printf("Falha interna. Fechando o programa");
 					exit(0);
 				}
-				int k=strlen(chave);
+				k=strlen(chave);
 				chave[k++]='\n';
 				chave[k--]='\0';
 				printf("%s",chave);
@@ -201,9 +189,7 @@ void ux(char *chave){
 			default :
 				free(chave);
 				free(aux);
-				free(nome);
-				free(telefone);
-				free(data);
+				free(info);
 				free(post);
 				fclose(posts);
 				fclose(tlinfo);
