@@ -22,7 +22,6 @@ while(fgets(aux3, 128, fp)!=NULL) {
 fclose(fp);
 fp=fopen(arquivo, "w+");
 for(int i=0; i<num-1; i++) {
-	printf("%s\n", copia[i]);
 	fprintf(fp, "%s", copia[i]);
 }
 for(int i=0; i<num-1; i++){

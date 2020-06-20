@@ -125,6 +125,10 @@ void ux(char *chave){
 					printf("Você segue esse usuário, gostaria de deixar de segui-lo?[s/n]\n");
 					char teste;
 					get_char(&teste);
+					while(teste!='s'&&teste!='n'){
+						printf("Entrada inválida, tente novamente\n");
+						get_char(&teste);
+					}
 					if(teste=='s'){
 						char *aux2;
 						aux2=(char*) malloc(sizeof(char)*50);
@@ -140,8 +144,23 @@ void ux(char *chave){
 						chave[k++]='2';
 						chave[k--]='\0';
 						apagar_usuario(seguidos,aux,z,chave);
-						chave[k]='\0';
+						chave[k++]='\n';
+						chave[k--]='\0';
+						int y=strlen(aux)-1;
+						aux[y++]='3';
+						aux[y--]='\0';
+						FILE *exclude=fopen(aux,"a+");
+						while(fgets(aux2,50,exclude)!=NULL){
+							z++;
+						}
+						apagar_usuario(exclude,chave,z,aux);
+						fclose(exclude);
 						free(aux2);
+						chave[k]='\0';
+						aux[y++]='\n';
+						aux[y]='\0';
+					}else{
+						break;
 					}
 				}else{
 					int manip=strlen(aux)-1;

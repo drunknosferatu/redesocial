@@ -3,6 +3,7 @@
 #include<string.h>
 
 int chec(char *chave,FILE *arq){
+	fseek(arq,0,SEEK_SET);
 	int compar=1;
 	char validade[50];
 	while(fgets(validade,50,arq)!=NULL){//puxa as strings do arquivo usuario
