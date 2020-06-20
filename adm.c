@@ -13,7 +13,7 @@ printf("[2] Gerenciar usuarios\n");
 int verif;
 get_int(&verif);
 
-FILE *fp= fopen("adm", "r+");
+FILE *fp= fopen("adm", "a+");
 
 FILE *fd=fopen("usuarios.txt", "r+");
 
