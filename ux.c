@@ -149,7 +149,8 @@ void ux(char *chave){
 						int y=strlen(aux)-1;
 						aux[y++]='3';
 						aux[y--]='\0';
-						FILE *exclude=fopen(aux,"a+");
+						FILE *exclude=fopen(aux,"r");
+						z=0;
 						while(fgets(aux2,50,exclude)!=NULL){
 							z++;
 						}
