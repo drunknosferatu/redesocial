@@ -205,10 +205,15 @@ void ux(char *chave){
 					printf("%s", aux);
 					num++;
 				}
-				//printf("Deseja apagar algum post?[s/n]\n");
-				//char quest;
-				//get_char(&quest);
-				//if (quest==s)
+				printf("Deseja apagar algum post?[s/n]\n");
+				char quest;
+				get_char(&quest);
+				while(quest!='s'&&quest!='n'){
+					printf("Entrada inválida, tente novamente");
+					get_char(&quest);
+				}
+				if (quest=='s'){
+					apagar_post(
 				break;
 			case 7:
 				k=0;
