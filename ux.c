@@ -14,12 +14,12 @@ void ux(char *chave){
 		printf("Falha interna. Fechando o programa");
 		exit(0);
 	}
-	post=(char*)malloc(sizeof(char)*128);	
+	post=(char*)malloc(sizeof(char)*129);	
 	if(post==NULL){
 		printf("Falha interna. Fechando o programa");
 		exit(0);
 	}
-	aux=(char*)malloc(sizeof(char)*50);
+	aux=(char*)malloc(sizeof(char)*52);
 	if(aux==NULL){
 		printf("Falha interna. Fechando o programa");
 		exit(0);
@@ -86,13 +86,13 @@ void ux(char *chave){
 				break;
 			case 2 :
 				printf("Escreva seu post abaixo\n");
-				fgets(post,128,stdin);
+				fgets(post,129,stdin);
 				fprintf(posts,"%s",post);
 				FILE *adm=fopen("adm","a");
 				fprintf(adm,"%s", post);
 				fclose(adm);
 				fseek(seguidores,0,SEEK_SET);
-				while(fgets(aux,50,seguidores)!=NULL){
+				while(fgets(aux,52,seguidores)!=NULL){
 					int j=strlen(aux);
 					aux[--j]='\0';
 					FILE *tlseg=fopen(aux,"a");
@@ -107,7 +107,7 @@ void ux(char *chave){
 				break;
 			case 3 :
 				printf("Digite o nome da pessoa que gostaria de seguir ou deixar de seguir:\n");
-				fgets(aux,50,stdin);
+				fgets(aux,52,stdin);
 				FILE *usuarios;
 				usuarios=fopen("usuarios.txt","r");
 				if(usuarios==NULL){
@@ -117,7 +117,7 @@ void ux(char *chave){
 				int checa=chec(aux,usuarios);
 				while(checa){
 					printf("Este usuario não existe,tente novamente\n");
-					fgets(aux,50,stdin);
+					fgets(aux,52,stdin);
 					checa=chec(aux,usuarios);
 				}
 				k=strlen(chave);
@@ -132,31 +132,20 @@ void ux(char *chave){
 						get_char(&teste);
 					}
 					if(teste=='s'){
-						char *aux2;
-						aux2=(char*) malloc(sizeof(char)*50);
 						if (aux2==NULL){
 							printf("Falha interna. Fechando o programa\n");
 							exit(0);
 						}
-						int z=0;
-						fseek(seguidos,0,SEEK_SET);
-						while(fgets(aux2,50,seguidos)!=NULL){
-							z++;
-						}
 						chave[k++]='2';
 						chave[k--]='\0';
-						apagar_usuario(seguidos,aux,z,chave);
+						apagar_usuario(seguidos,aux,chave);
 						chave[k++]='\n';
 						chave[k--]='\0';
 						int y=strlen(aux)-1;
 						aux[y++]='3';
 						aux[y--]='\0';
 						FILE *exclude=fopen(aux,"r");
-						z=0;
-						while(fgets(aux2,50,exclude)!=NULL){
-							z++;
-						}
-						apagar_usuario(exclude,chave,z,aux);
+						apagar_usuario(exclude,chave,aux);
 						fclose(exclude);
 						free(aux2);
 						chave[k]='\0';
@@ -187,20 +176,20 @@ void ux(char *chave){
 				break;
 			case 4 :
 				fseek(seguidores,0,SEEK_SET);
-				while(fgets(aux,50,seguidores)!=NULL){
+				while(fgets(aux,52,seguidores)!=NULL){
 					printf("%s\n",aux);
 				}
 				break;
 			case 5 :
 				fseek(seguidos,0,SEEK_SET);
-				while(fgets(aux,50,seguidos)!=NULL){
+				while(fgets(aux,52,seguidos)!=NULL){
 					printf("%s\n", aux);
 				}
 				break;
 			case 6:
 				fseek(posts,0,SEEK_SET);
 				int num=1;
-				while(fgets(aux,128,posts)!=NULL){
+				while(fgets(aux,129,posts)!=NULL){
 					printf("%d: ", num);
 					printf("%s", aux);
 					num++;
@@ -213,7 +202,11 @@ void ux(char *chave){
 					get_char(&quest);
 				}
 				if (quest=='s'){
-					apagar_post(
+					printf("Digite o número do post que você deseja apagar\n");
+					int numpost;
+					int numpost2;
+					scanf("%d",&numpost);
+					
 				break;
 			case 7:
 				k=0;
@@ -224,14 +217,14 @@ void ux(char *chave){
 				int tamanho=0;
 				int tamultimos=0;
 				fseek(tlinfo,0,SEEK_SET);
-				while(fgets(aux,128,tlinfo)!=NULL){
+				while(fgets(aux,129,tlinfo)!=NULL){
 					k++;
 				}
 				while(perg=='s'&&m<=k){
 					while(m<=10*o&&tlinfo!=NULL&&m<=k){
 						l=0;
 						fseek(tlinfo,0,SEEK_SET);
-						while(fgets(aux,128,tlinfo)!=NULL&&l<=k-m-1){
+						while(fgets(aux,129,tlinfo)!=NULL&&l<=k-m-1){
 							l++;
 						}
 						printf("%s",aux);
