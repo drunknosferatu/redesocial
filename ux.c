@@ -213,7 +213,8 @@ void ux(char *chave){
 					get_char(&quest);
 				}
 				if (quest=='s'){
-					apagar_post(
+					apagar_post();//falta argumentos
+                }
 				break;
 			case 7:
 				k=0;
