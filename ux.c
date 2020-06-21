@@ -201,6 +201,7 @@ void ux(char *chave){
 					num--;
 					int teta;
 					scanf("%d", &teta);
+					setbuf(stdin,NULL);
 					fseek(posts,0,SEEK_SET);
 					int z=0;
 					while(fgets(post,129,posts)!=NULL){
@@ -212,14 +213,12 @@ void ux(char *chave){
 					int w=strlen(chave);
 					chave[w++]='4';
 					chave[w--]='\0';
-					printf("%s", chave);
 					apagar_post(posts,post,chave);
 					chave[w]='\0';
 					fseek(seguidores,0,SEEK_SET);
 					while(fgets(aux,52,seguidores)!=NULL){
 						int w=strlen(aux)-1;
 						aux[w]='\0';
-						printf("%s",aux);
 						FILE *excludepost=fopen(aux,"a+");
 						if(excludepost==NULL){
 							printf("Falha interna. Fechando o programa");

@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 	void apagar_post(FILE *fp, char post[129], char *arquivo) {
-printf("%s", arquivo);
 		fseek(fp,0,SEEK_SET);
 char *aux4=(char*)malloc(sizeof(char)*129);
 int num=0;
@@ -16,16 +15,22 @@ for(int i=0; i<num-1; i++) {
 }
 fseek(fp,0,SEEK_SET);
 int i=0;
+int flag=0;
 while(fgets(aux4, 129, fp)!=NULL) {
 	if(strcmp(post,aux4)!=0) {
 		strcpy(copia[i++],aux4);
+	}else if(flag){
+		strcpy(copia[i++],aux4);
+	}
+	if(strcmp(post,aux4)==0){
+		flag=1;
 	}
 }
 //apos copiar os posts, menos o desejado o arquivo deve ser limpo
 fclose(fp);
 fp=fopen(arquivo, "w+");
 
-for(int i=0; i<num; i++) {
+for(int i=0; i<num-1; i++) {
        fprintf(fp, "%s", copia[i]);
 }
 for(int i=0; i<(num-1); i++){
