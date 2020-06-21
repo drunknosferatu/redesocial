@@ -33,25 +33,25 @@ switch (verif) {
 	case 1:{
 
 		char *posts;
-		posts= (char*) malloc(sizeof(char)*128);
+		posts= (char*) malloc(sizeof(char)*129);
 		char *teste;
-        teste= (char*) malloc(sizeof(char)*128);
+        teste= (char*) malloc(sizeof(char)*129);
 		int flag=1;
 		int linha=0;
 		int num=0; //numero de posts
-		while(fgets(teste , 128 , fp)!=NULL) {
+		while(fgets(teste , 129 , fp)!=NULL) {
 			num++;
 		}
 		printf("Existem atualmente %d posts na timeline geral\n", num);
 		fseek(fp, 0, SEEK_SET);
 		    for(int linha=1; linha<=num; linha++) {
-			    fgets(posts, 128, fp);
+			    fgets(posts, 129, fp);
 			    printf("%d %s\n", linha, posts);
 			}
 		    printf("\nDeseja excluir algum post? [s/n]\n");
             get_char(&excluir_bin);
             while(excluir_bin != 's' && excluir_bin!='n' ) {
-                printf("Resposta invalida/n");
+                printf("Resposta invalida\n");
                 get_char(&excluir_bin);
             }
             if(excluir_bin == 's'){
@@ -61,9 +61,45 @@ switch (verif) {
                     printf("Resposta invalida\n");
                     get_int(&excluir_numero);
                 }
-                apagar_post(fp, excluir_numero, num,"adm");
-             }
+                fseek(fp,0,SEEK_SET);
+                for(int j = 0; j < excluir_numero;j++){
+                    fgets(posts,129,fp);
+                }
+                apagar_post(fp,posts,"adm");
+                fseek(fd,0,SEEK_SET);
+                char *aux2 = (char *)malloc(sizeof(char)*50);
+                int ctn = 0;
+                while(fgets(aux2,50,fd) != NULL){
+                    ctn++;
+                }
+                char **users;
+                users = (char **)malloc(sizeof(char*)*ctn);
+                for(int j = 0; j < ctn;j++){
+                    users[j] = (char *)malloc(sizeof(char)*50);
+                }
+                fseek(fd,0,SEEK_SET);
+                for(int j = 0; j < ctn; j++){
+                    fgets(users[j],50,fd);
+                }
+                for(int j = 0; j < ctn;j++){
+                    int len = 0;
+                    len = strlen(users[j]);
+                    users[j][len-1] = '4';
+                }
+                for(int j = 1;j < ctn;j++){
+                    FILE *fc;
+                    fc =  fopen(users[j],"a+");
+                    apagar_post(fc,posts,users[j]);
+                    fclose(fc);
 
+                }
+                for(int j = 0;j < ctn;j++){
+                    free(users[j]);
+                }
+                free(users);
+                free(aux2);
+
+             }
 		    printf("Deseja ver mais postagens? [s/n]");
 		    char resposta;
 		    get_char(&resposta);
@@ -81,6 +117,7 @@ switch (verif) {
     }
 
 	case 2:{
+    fseek(fd,0,SEEK_SET);
 	char *aux;
     int	num=0;
         aux= (char*) malloc(sizeof(char)*50);
@@ -110,7 +147,7 @@ switch (verif) {
             flag = chec(aux,fd);
      }
 
-apagar_usuario(fd, aux, num, "usuarios.txt");
+        apagar_usuario(fd, aux, "usuarios.txt");
                 }
 	    break;
            }
