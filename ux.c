@@ -143,7 +143,6 @@ void ux(char *chave){
 						FILE *exclude=fopen(aux,"r");
 						apagar_usuario(exclude,chave,aux);
 						fclose(exclude);
-						free(aux2);
 						chave[k]='\0';
 						aux[y++]='\n';
 						aux[y]='\0';
@@ -185,9 +184,9 @@ void ux(char *chave){
 			case 6:
 				fseek(posts,0,SEEK_SET);
 				int num=1;
-				while(fgets(aux,129,posts)!=NULL){
+				while(fgets(post,129,posts)!=NULL){
 					printf("%d: ", num);
-					printf("%s", aux);
+					printf("%s", post);
 					num++;
 				}
 				printf("Deseja apagar algum post?[s/n]\n");
@@ -200,22 +199,35 @@ void ux(char *chave){
 				if (quest=='s'){
 					printf("Digite o número do post que você deseja apagar\n");
 					num--;
-					int numexclude;
-					scanf("%d",&numexclude);
+					int teta;
+					scanf("%d", &teta);
 					fseek(posts,0,SEEK_SET);
 					int z=0;
-					while(fgets(aux,129,posts)!=NULL){
+					while(fgets(post,129,posts)!=NULL){
 						z++;
-						if(z==numexclude){
-							break
+						if(z==1){
+							break;
 						}
 					}
 					int w=strlen(chave);
 					chave[w++]='4';
 					chave[w--]='\0';
-					apagar_post(posts,aux,chave);
+					printf("%s", chave);
+					apagar_post(posts,post,chave);
 					chave[w]='\0';
-
+					fseek(seguidores,0,SEEK_SET);
+					while(fgets(aux,52,seguidores)!=NULL){
+						int w=strlen(aux)-1;
+						aux[w]='\0';
+						printf("%s",aux);
+						FILE *excludepost=fopen(aux,"a+");
+						if(excludepost==NULL){
+							printf("Falha interna. Fechando o programa");
+							exit(0);
+						}
+						apagar_post(excludepost,post,aux);
+						fclose(excludepost);
+					}
 				}
 				break;
 			case 7:
@@ -227,17 +239,17 @@ void ux(char *chave){
 				int tamanho=0;
 				int tamultimos=0;
 				fseek(tlinfo,0,SEEK_SET);
-				while(fgets(aux,129,tlinfo)!=NULL){
+				while(fgets(post,129,tlinfo)!=NULL){
 					k++;
 				}
 				while(perg=='s'&&m<=k){
 					while(m<=10*o&&tlinfo!=NULL&&m<=k){
 						l=0;
 						fseek(tlinfo,0,SEEK_SET);
-						while(fgets(aux,129,tlinfo)!=NULL&&l<=k-m-1){
+						while(fgets(post,129,tlinfo)!=NULL&&l<=k-m-1){
 							l++;
 						}
-						printf("%s",aux);
+						printf("%s",post);
 						m++;
 					}
 					o++;
