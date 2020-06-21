@@ -146,6 +146,7 @@ void ux(char *chave){
 						chave[k]='\0';
 						aux[y++]='\n';
 						aux[y]='\0';
+						printf("Você deixou de seguir este usuário\n");
 					}else{
 						break;
 					}
@@ -155,7 +156,7 @@ void ux(char *chave){
 					aux[manip--]='\0';
 					FILE *seguir=fopen(aux,"a");
 					if(seguir==NULL){
-						printf("Falha interna. Fechando o programa");
+						printf("Falha interna. Fechando o programa\n");
 						exit(0);
 					}
 					chave[k++]='\n';
@@ -167,6 +168,7 @@ void ux(char *chave){
 					aux[manip]='\0';
 					fprintf(seguidos,"%s",aux);
 					fclose(usuarios);
+					printf("Você seguiu este usuário\n");
 				}
 				break;
 			case 4 :
@@ -189,6 +191,10 @@ void ux(char *chave){
 					printf("%s", post);
 					num++;
 				}
+				if(num==1){
+					printf("Você ainda não tem posts\n");
+					break;
+				}
 				printf("Deseja apagar algum post?[s/n]\n");
 				char quest;
 				get_char(&quest);
@@ -199,14 +205,14 @@ void ux(char *chave){
 				if (quest=='s'){
 					printf("Digite o número do post que você deseja apagar\n");
 					num--;
-					int teta;
-					scanf("%d", &teta);
+					int numexclude;
+					scanf("%d", &numexclude);
 					setbuf(stdin,NULL);
 					fseek(posts,0,SEEK_SET);
 					int z=0;
 					while(fgets(post,129,posts)!=NULL){
 						z++;
-						if(z==1){
+						if(z==numexclude){
 							break;
 						}
 					}
@@ -226,17 +232,16 @@ void ux(char *chave){
 						}
 						apagar_post(excludepost,post,aux);
 						fclose(excludepost);
+						printf("Post apagado com sucesso\n");
 					}
 				}
 				break;
 			case 7:
 				k=0;
 				int l=0;
-				int m=1;
+				int m=4;
 				int o=1;
 				char perg='s';
-				int tamanho=0;
-				int tamultimos=0;
 				fseek(tlinfo,0,SEEK_SET);
 				while(fgets(post,129,tlinfo)!=NULL){
 					k++;
