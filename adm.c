@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "apagar.h"
 #include "chec.h"
 
@@ -10,12 +11,20 @@ printf("Bem vindo administrador!\n");
 printf("Escolha uma das opcoes para iniciar\n");
 printf("[1] Gerenciar postagens\n");
 printf("[2] Gerenciar usuarios\n");
+printf("[3] Logout\n");
 int verif;
 get_int(&verif);
 
-FILE *fp= fopen("adm", "a+");
+FILE *fp;
+fp = fopen("adm", "a+");
 
-FILE *fd=fopen("usuarios.txt", "r+");
+FILE *fd;
+fd = fopen("usuarios.txt", "r+");
+
+if(fd == NULL){
+    printf("falha interna\n");
+    exit(0);
+}
 
 switch (verif) {
 
@@ -61,20 +70,22 @@ switch (verif) {
                                                         get_char( &excluir_bin);
                                                                  }
                                                 if(excluir_bin =='s'){
-                                                        apagar_post(fp, excluir_numero, num, "adm");
+                                                        apagar_post(fp, excluir_numero, num);
                                                 }
 
 		printf("Deseja ver mais postagens? [s/n]");
 		char resposta;
 		get_char(&resposta);
-		while(resposta =! 's' && resposta!= 'n') {
-			printf("Resposta invalida/n");
+		while(resposta != 's' && resposta!= 'n') {
+			printf("Resposta invalida\n");
 			get_char(&resposta);
 			}	
 		if(resposta=='n'){
 			flag=0;
 			}
 		}
+        free(posts);
+        free(teste);
         break;
     }
 	case 2:{
@@ -85,21 +96,27 @@ switch (verif) {
 		printf("%s", aux);
 		num++;
 	}
-	printf("Existem atualmente %d registrados na rede\n", num);
+	printf("Existem atualmente %d registrados na rede\n", num-1);
 	printf("Deseja excluir algum dos usuários? [s/n]\n");
 	char resp;
 	get_char(&resp);
-	while(resp=! 's' && resp!='n') {
-                        printf("Resposta invalida/n");
-                        get_char(&resp);
-                        }
-                if(resp=='s'){
-                        printf("Qual deles?\n");
+	while(resp != 's' && resp!='n') {
+        printf("Resposta invalida\n");
+        get_char(&resp);
+     }
+    if(resp=='s'){
+        printf("Qual deles?\n");
+		fgets(aux, 50, stdin);
+        int k = strlen(aux);
+        aux[k-1] = '\0';
+        int flag = 1;
+        flag = chec(aux,fd);
+		while(flag != 0) {
+		    printf("Esse usuario nao existe\n");
+            setbuf(stdin,NULL);
 			fgets(aux, 50, stdin);
-			while(chec(aux,fd)!=0) {
-				printf("Esse usuario nao existe/n");
-				fgets(aux, 50, stdin);
-                        }
+            flag = chec(aux,fd);
+     }
 
 apagar_usuario(fd, aux, num, "usuarios.txt");
                 }
@@ -109,7 +126,6 @@ apagar_usuario(fd, aux, num, "usuarios.txt");
 		logout=0;
         break;
 }
-
 fclose(fp);
 fclose(fd);
 }
