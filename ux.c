@@ -132,10 +132,6 @@ void ux(char *chave){
 						get_char(&teste);
 					}
 					if(teste=='s'){
-						if (aux2==NULL){
-							printf("Falha interna. Fechando o programa\n");
-							exit(0);
-						}
 						chave[k++]='2';
 						chave[k--]='\0';
 						apagar_usuario(seguidos,aux,chave);
@@ -203,10 +199,24 @@ void ux(char *chave){
 				}
 				if (quest=='s'){
 					printf("Digite o número do post que você deseja apagar\n");
-					int numpost;
-					int numpost2;
-					scanf("%d",&numpost);
-					
+					num--;
+					int numexclude;
+					scanf("%d",&numexclude);
+					fseek(posts,0,SEEK_SET);
+					int z=0;
+					while(fgets(aux,129,posts)!=NULL){
+						z++;
+						if(z==numexclude){
+							break
+						}
+					}
+					int w=strlen(chave);
+					chave[w++]='4';
+					chave[w--]='\0';
+					apagar_post(posts,aux,chave);
+					chave[w]='\0';
+
+				}
 				break;
 			case 7:
 				k=0;
