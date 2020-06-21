@@ -199,9 +199,16 @@ void ux(char *chave){
 				break;
 			case 6:
 				fseek(posts,0,SEEK_SET);
+				int num=1;
 				while(fgets(aux,128,posts)!=NULL){
-					printf("%s\n", aux);
+					printf("%d: ", num);
+					printf("%s", aux);
+					num++;
 				}
+				//printf("Deseja apagar algum post?[s/n]\n");
+				//char quest;
+				//get_char(&quest);
+				//if (quest==s)
 				break;
 			case 7:
 				k=0;

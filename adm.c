@@ -61,7 +61,7 @@ switch (verif) {
                                                         get_char( &excluir_bin);
                                                                  }
                                                 if(excluir_bin =='s'){
-                                                        apagar_post(fp, excluir_numero, num);
+                                                        apagar_post(fp, excluir_numero, num, "adm");
                                                 }
 
 		printf("Deseja ver mais postagens? [s/n]");
