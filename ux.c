@@ -9,6 +9,12 @@ void ux(char *chave){
 	char *post;
 	char *aux;
 	char *info;
+	char *auxpost;
+	auxpost=(char*) malloc(sizeof(char)*181);
+	if(auxpost==NULL){
+		printf("Falha interna. Fechando o programa\n");
+		exit(0);
+	}
 	info=(char*)malloc(sizeof(char)*100);
 	if(info==NULL){
 		printf("Falha interna. Fechando o programa");
@@ -25,31 +31,28 @@ void ux(char *chave){
 		exit(0);
 	}
 	int i=strlen(chave);
-	chave[--i]='\0';
+	chave[--i]='1';
 	FILE *tlinfo;
 	tlinfo=fopen(chave,"a+");	
 	if(tlinfo==NULL){
 		printf("Falha interna. Fechando o programa");
 		exit(0);
 	}
-	chave[i++]='4';
-	chave[i--]='\0';
+	chave[i]='4';
 	FILE *posts;
 	posts=fopen(chave,"a+");	
 	if(posts==NULL){
 		printf("Falha interna. Fechando o programa");
 		exit(0);
 	}
-	chave[i++]='3';
-	chave[i--]='\0';
+	chave[i]='3';
 	FILE *seguidores;
 	seguidores=fopen(chave,"a+");	
 	if(seguidores==NULL){
 		printf("Falha interna. Fechando o programa");
 		exit(0);
 	}
-	chave[i++]='2';
-	chave[i--]='\0';
+	chave[i]='2';
 	FILE *seguidos;
 	seguidos=fopen(chave,"a+");
 	if(seguidos==NULL){
@@ -94,14 +97,19 @@ void ux(char *chave){
 				fseek(seguidores,0,SEEK_SET);
 				while(fgets(aux,52,seguidores)!=NULL){
 					int j=strlen(aux);
-					aux[--j]='\0';
+					aux[--j]='1';
+					printf("%s",aux);
 					FILE *tlseg=fopen(aux,"a");
 					if(tlseg==NULL){
 						printf("Falha interna. Fechando o programa");
 						exit(0);
 					}
-					fprintf(tlseg,"%s",post);
-					fprintf(tlseg,"%s:\n",chave);
+					strcpy(auxpost,chave);
+					j=strlen(auxpost);
+					auxpost[j++]=':';
+					auxpost[j]='\0';
+					strcat(auxpost,post);
+					fprintf(tlseg,"%s",auxpost);
 					fclose(tlseg);
 				}
 				break;
@@ -141,6 +149,10 @@ void ux(char *chave){
 						aux[y++]='3';
 						aux[y--]='\0';
 						FILE *exclude=fopen(aux,"r");
+						if(exclude==NULL){
+							printf("Falha interna. Saindo do programa");
+							exit(0);
+						}
 						apagar_usuario(exclude,chave,aux);
 						fclose(exclude);
 						chave[k]='\0';
@@ -172,12 +184,14 @@ void ux(char *chave){
 				}
 				break;
 			case 4 :
+				printf("Essas são as pessoas que te seguem:\n");
 				fseek(seguidores,0,SEEK_SET);
 				while(fgets(aux,52,seguidores)!=NULL){
 					printf("%s\n",aux);
 				}
 				break;
 			case 5 :
+				printf("Você segue esssas pessoas:\n");
 				fseek(seguidos,0,SEEK_SET);
 				while(fgets(aux,52,seguidos)!=NULL){
 					printf("%s\n", aux);
@@ -186,6 +200,7 @@ void ux(char *chave){
 			case 6:
 				fseek(posts,0,SEEK_SET);
 				int num=1;
+				printf("Esses são seus posts\n");
 				while(fgets(post,129,posts)!=NULL){
 					printf("%d: ", num);
 					printf("%s", post);
@@ -204,7 +219,6 @@ void ux(char *chave){
 				}
 				if (quest=='s'){
 					printf("Digite o número do post que você deseja apagar\n");
-					num--;
 					int numexclude;
 					scanf("%d", &numexclude);
 					setbuf(stdin,NULL);
@@ -220,17 +234,22 @@ void ux(char *chave){
 					chave[w++]='4';
 					chave[w--]='\0';
 					apagar_post(posts,post,chave);
-					chave[w]='\0';
+					chave[w]=':';
 					fseek(seguidores,0,SEEK_SET);
+					printf("%s",chave);
+					strcpy(auxpost,chave);
+					strcat(auxpost,post);
+					chave[w]='\0';
 					while(fgets(aux,52,seguidores)!=NULL){
 						int w=strlen(aux)-1;
+						aux[w++]='1';
 						aux[w]='\0';
 						FILE *excludepost=fopen(aux,"a+");
 						if(excludepost==NULL){
 							printf("Falha interna. Fechando o programa");
 							exit(0);
 						}
-						apagar_post(excludepost,post,aux);
+						apagar_post(excludepost,auxpost,aux);
 						fclose(excludepost);
 						printf("Post apagado com sucesso\n");
 					}
@@ -239,7 +258,7 @@ void ux(char *chave){
 			case 7:
 				k=0;
 				int l=0;
-				int m=4;
+				int m=1;
 				int o=1;
 				char perg='s';
 				fseek(tlinfo,0,SEEK_SET);
@@ -247,7 +266,7 @@ void ux(char *chave){
 					k++;
 				}
 				while(perg=='s'&&m<=k){
-					while(m<=10*o&&tlinfo!=NULL&&m<=k){
+					while(m<=5*o&&tlinfo!=NULL&&m<=k){
 						l=0;
 						fseek(tlinfo,0,SEEK_SET);
 						while(fgets(post,129,tlinfo)!=NULL&&l<=k-m-1){
@@ -273,6 +292,7 @@ void ux(char *chave){
 				fclose(tlinfo);
 				fclose(seguidores);
 				fclose(seguidos);
+				free(auxpost);
 				flag=0;
 		}
 	}

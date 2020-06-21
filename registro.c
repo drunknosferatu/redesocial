@@ -18,7 +18,9 @@ void registro(){
 	}
 	fprintf(usuarios,"%s",novachave);//ao chegar aqui a chave inserida é valida
 	int i=strlen(novachave);
-	novachave[--i]='\0';//tira o \n da string pra facilitar a manipulação do arquivo por nome
+	novachave[--i]='1';//tira o \n da string pra facilitar a manipulação do arquivo por nome
+	i++;
+	novachave[i--]='\0';
 	FILE *novousuario4;//para abrir o arq. dos seus posts
 	FILE *novousuario2;//para abrir o arq. de seguidores
 	FILE *novousuario3;// para abrir o arq. de seguidos
@@ -31,11 +33,11 @@ void registro(){
 	fprintf(novousuario, "%s",nome);
 	printf("Data de nascimento, separada por barras(EX:03/08/2002):\n");
 	char nasc[12];
-	fgets(nasc,11,stdin);
+	fgets(nasc,12,stdin);
 	fprintf(novousuario, "%s", nasc);
 	printf("Número de telefone(sem traços e pontos,Ex:19989301761):\n");
 	char telefone[13];
-	fgets(telefone,12,stdin);
+	fgets(telefone,13,stdin);
 	fprintf(novousuario, "%s", telefone);
 	fclose(usuarios);
 	fclose(novousuario);
