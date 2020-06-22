@@ -79,9 +79,9 @@ void ux(char *chave){
             get_int(&verif);
 		}
 		switch(verif){
-			case 1 ://printa a data de nascimento, nome e telefone do usuario, assim como seu numero de seguidores e posts
+			case 1 ://printa nome e telefone do usuario, assim como seu numero de seguidores e posts
 				fseek(tlinfo,0,SEEK_SET);
-				for(i=0;i<3;i++){
+				for(i=0;i<2;i++){
 					fgets(info,100,tlinfo);
 					printf("%s",info);
 				}
@@ -292,8 +292,8 @@ void ux(char *chave){
 				while(fgets(post,129,tlinfo)!=NULL){//conta o numero de posts
 					k++;
 				}
-				while(perg=='s'&&m<=k-3){//printa os posts de 5 em 5
-					while(m<=5*o&&tlinfo!=NULL&&m<=k-3){
+				while(perg=='s'&&m<=k-2){//printa os posts de 5 em 5
+					while(m<=5*o&&tlinfo!=NULL&&m<=k-2){
 						l=0;//vai buscar o post a ser postado do inicio do arquivo
 						fseek(tlinfo,0,SEEK_SET);
 						while(fgets(post,129,tlinfo)!=NULL&&l<=k-m-1){//busca o post
