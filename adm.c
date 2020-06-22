@@ -100,7 +100,7 @@ switch (verif) {
                 free(aux2);
 
              }
-		    printf("Deseja ver mais postagens? [s/n]");
+		    printf("Deseja ver mais postagens? [s/n]\n");
 		    char resposta;
 		    get_char(&resposta);
 		    while(resposta != 's' && resposta!= 'n') {
