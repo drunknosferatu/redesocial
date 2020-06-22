@@ -11,7 +11,8 @@ printf("Bem vindo administrador!\n");
 printf("Escolha uma das opcoes para iniciar\n");
 printf("[1] Gerenciar postagens\n");
 printf("[2] Gerenciar usuarios\n");
-printf("[3] Logout\n");
+printf("[3] Master Reset\n");
+printf("[4] Logout\n");
 int verif;
 get_int(&verif);
 
@@ -153,7 +154,31 @@ switch (verif) {
                 }
 	    break;
            }
-	case 3:
+    case 3:{
+        printf("Você realmente deseja resetar todos os dados de usuarios e postagens? [s/n]\n");
+        char resp2;
+        get_char(&resp2);
+        while(resp2 != 's' && resp2 != 'n'){
+            printf("Resposta inválida\n");
+            get_char(&resp2);
+        }
+        if(resp2 == 's'){
+            printf("Resetando sistema...\n");
+            fclose(fp);
+            fclose(fd);
+            fp = fopen("usuarios.txt","w");
+            fd = fopen("adm","w");
+            if(fp == NULL || fd == NULL){
+                printf("Falha interna, finalizando programa\n");
+                exit(0);
+            }
+            logout = 0;
+            break;
+        }else{
+            break;
+        }
+    }
+	case 4:
 		logout=0;
         break;
 }
