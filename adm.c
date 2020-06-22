@@ -47,6 +47,18 @@ switch (verif) {
 		    for(int linha=1; linha<=num; linha++) {
 			    fgets(posts, 129, fp);
 			    printf("%d %s\n", linha, posts);
+                if(linha % 5 == 0){
+		            printf("Deseja ver mais postagens? [s/n]\n");
+		            char resposta;
+		            get_char(&resposta);
+		            while(resposta != 's' && resposta != 'n') {
+			             printf("Resposta invalida\n");
+			             get_char(&resposta);
+		            }
+                    if(resposta== 'n'){
+                        break;
+                    }    
+                }
 			}
 		    printf("\nDeseja excluir algum post? [s/n]\n");
             get_char(&excluir_bin);
@@ -100,16 +112,6 @@ switch (verif) {
                 free(aux2);
 
              }
-		    printf("Deseja ver mais postagens? [s/n]\n");
-		    char resposta;
-		    get_char(&resposta);
-		    while(resposta != 's' && resposta!= 'n') {
-			    printf("Resposta invalida\n");
-			    get_char(&resposta);
-		    }	
-		    if(resposta=='n'){
-			    flag=0;
-		    }
 	
     free(posts);
     free(teste);
@@ -136,8 +138,8 @@ switch (verif) {
     if(resp=='s'){
         printf("Qual deles?\n");
 		fgets(aux, 50, stdin);
-        int k = strlen(aux);
-        aux[k-1] = '\0';
+       // int k = strlen(aux);
+      //  aux[k-1] = '\0';
         int flag = 1;
         flag = chec(aux,fd);
 		while(flag != 0) {
