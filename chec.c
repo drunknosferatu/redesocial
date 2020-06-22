@@ -15,7 +15,7 @@ int chec(char *chave,FILE *arq){
 	return compar;//retorna o estado(0 para strings iguais, !=0 para strings diferentes
 }
 
-void get_int(int *num){
+void get_int(int *num){//filtra as entradas para nao haver problemas com buffer
 
     int flag = 0;
 
@@ -43,7 +43,7 @@ void get_int(int *num){
 
 }
 
-void get_char(int *chr){
+void get_char(int *chr){//filtra as entradas para nao haver problemas com buffer
 
     int flag = 0;
 

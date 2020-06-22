@@ -8,6 +8,7 @@
 int main(int argc, char *argv[]){
 	int compar;
 	while(1){//loop de funcionamento do programa
+		printf("Bem-vindo ao keyfriends, a rede social mais amiga da internet\n");
 		printf("Gostaria de iniciar uma sessão[s/n]?\n");
 		char verif;
         get_char(&verif);
@@ -40,6 +41,7 @@ int main(int argc, char *argv[]){
 			fgets(chave,50, stdin);//pega a chave de acesso
 			if(strcmp(chave,"adm\n")==0) {
 				adm();
+				break;
 			}
 			FILE *usuarios;
 			usuarios=fopen("usuarios.txt","r");
