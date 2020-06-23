@@ -110,7 +110,6 @@ void ux(char *chave){
 				while(fgets(aux,52,seguidores)!=NULL){//concatena a string do nome do usuario autor do post ao post para identificação e printa na timeline dos seguidores
 					int j=strlen(aux);//variavel para manipulação de strings
 					aux[--j]='1';
-					printf("%s",aux);
 					FILE *tlseg=fopen(aux,"a");
 					if(tlseg==NULL){
 						printf("Falha interna. Fechando o programa");
